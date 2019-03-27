@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GasAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DonHang">
+          <Key>
+            <PropertyRef Name="MaDonHang" />
+          </Key>
+          <Property Name="MaDonHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaNguoiDung" Type="int" />
+          <Property Name="ThoiGianDatHang" Type="datetime" />
+          <Property Name="TongTien" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiYeuCau" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayGioTrangThai" Type="datetime" />
+          <Property Name="DanhGia" Type="tinyint" />
+          <Property Name="DiaChiGiao" Type="nvarchar" MaxLength="150" />
+          <Property Name="ThoiGianGiao" Type="datetime" />
+          <Property Name="ShopId" Type="int" />
+          <Property Name="ShopName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShopPhone" Type="nvarchar" MaxLength="25" />
+          <Property Name="SynchronizedUser" Type="bit" />
+          <Property Name="SynchronizedShop" Type="bit" />
+          <Property Name="SyncPostMan" Type="bit" />
+          <Property Name="PostMan" Type="int" />
+        </EntityType>
+        <EntityType Name="DonHangChiTiet">
+          <Key>
+            <PropertyRef Name="DonHangChiTiet" />
+          </Key>
+          <Property Name="DonHangChiTiet" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MaDonHang" Type="int" Nullable="false" />
+          <Property Name="MaSanPham" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SoLuong" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="DonGia" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ThanhTien" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ChietKhauPercent" Type="tinyint" />
+          <Property Name="GiamTienMat" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Mau" Type="nvarchar" MaxLength="26" />
+          <Property Name="TenSanPham" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NguoiDung">
+          <Key>
+            <PropertyRef Name="MaNguoiDung" />
+          </Key>
+          <Property Name="MaNguoiDung" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenNguoiDung" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoDienThoai" Type="nvarchar" MaxLength="20" />
+          <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiNguoiDung" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="150" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Staffin" Type="int" />
+        </EntityType>
+        <EntityType Name="SanPham">
+          <Key>
+            <PropertyRef Name="MaSanPham" />
+          </Key>
+          <Property Name="MaSanPham" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TenSanPham" Type="nvarchar" MaxLength="50" />
+          <Property Name="DonGia" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiSanPham" Type="nvarchar" MaxLength="50" />
+          <Property Name="MauSac" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TrangThaiDh">
+          <Key>
+            <PropertyRef Name="TrangThai" />
+          </Key>
+          <Property Name="TrangThaiId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrangThai" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DonHangChiTiet_DonHang">
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="1" />
+          <End Role="DonHangChiTiet" Type="Self.DonHangChiTiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonHang">
+              <PropertyRef Name="MaDonHang" />
+            </Principal>
+            <Dependent Role="DonHangChiTiet">
+              <PropertyRef Name="MaDonHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHangChiTiet_SanPham">
+          <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
+          <End Role="DonHangChiTiet" Type="Self.DonHangChiTiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SanPham">
+              <PropertyRef Name="MaSanPham" />
+            </Principal>
+            <Dependent Role="DonHangChiTiet">
+              <PropertyRef Name="MaSanPham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GasAppModelStoreContainer">
+          <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DonHangChiTiet" EntityType="Self.DonHangChiTiet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NguoiDung" EntityType="Self.NguoiDung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrangThaiDh" EntityType="Self.TrangThaiDh" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DonHangChiTiet_DonHang" Association="Self.FK_DonHangChiTiet_DonHang">
+            <End Role="DonHang" EntitySet="DonHang" />
+            <End Role="DonHangChiTiet" EntitySet="DonHangChiTiet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHangChiTiet_SanPham" Association="Self.FK_DonHangChiTiet_SanPham">
+            <End Role="SanPham" EntitySet="SanPham" />
+            <End Role="DonHangChiTiet" EntitySet="DonHangChiTiet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GasAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GasAppEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DonHangs" EntityType="GasAppModel.DonHang" />
+          <EntitySet Name="DonHangChiTiets" EntityType="GasAppModel.DonHangChiTiet" />
+          <EntitySet Name="NguoiDungs" EntityType="GasAppModel.NguoiDung" />
+          <EntitySet Name="SanPhams" EntityType="GasAppModel.SanPham" />
+          <EntitySet Name="TrangThaiDhs" EntityType="GasAppModel.TrangThaiDh" />
+          <AssociationSet Name="FK_DonHangChiTiet_DonHang" Association="GasAppModel.FK_DonHangChiTiet_DonHang">
+            <End Role="DonHang" EntitySet="DonHangs" />
+            <End Role="DonHangChiTiet" EntitySet="DonHangChiTiets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHangChiTiet_SanPham" Association="GasAppModel.FK_DonHangChiTiet_SanPham">
+            <End Role="SanPham" EntitySet="SanPhams" />
+            <End Role="DonHangChiTiet" EntitySet="DonHangChiTiets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DonHang">
+          <Key>
+            <PropertyRef Name="MaDonHang" />
+          </Key>
+          <Property Name="MaDonHang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaNguoiDung" Type="Int32" />
+          <Property Name="ThoiGianDatHang" Type="DateTime" Precision="3" />
+          <Property Name="TongTien" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiYeuCau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayGioTrangThai" Type="DateTime" Precision="3" />
+          <Property Name="DanhGia" Type="Byte" />
+          <Property Name="DiaChiGiao" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ThoiGianGiao" Type="DateTime" Precision="3" />
+          <Property Name="ShopId" Type="Int32" />
+          <Property Name="ShopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShopPhone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SynchronizedUser" Type="Boolean" />
+          <Property Name="SynchronizedShop" Type="Boolean" />
+          <Property Name="SyncPostMan" Type="Boolean" />
+          <Property Name="PostMan" Type="Int32" />
+          <NavigationProperty Name="DonHangChiTiets" Relationship="GasAppModel.FK_DonHangChiTiet_DonHang" FromRole="DonHang" ToRole="DonHangChiTiet" />
+        </EntityType>
+        <EntityType Name="DonHangChiTiet">
+          <Key>
+            <PropertyRef Name="DonHangChiTiet1" />
+          </Key>
+          <Property Name="DonHangChiTiet1" Type="Guid" Nullable="false" />
+          <Property Name="MaDonHang" Type="Int32" Nullable="false" />
+          <Property Name="MaSanPham" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SoLuong" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DonGia" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ThanhTien" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ChietKhauPercent" Type="Byte" />
+          <Property Name="GiamTienMat" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Mau" Type="String" MaxLength="26" FixedLength="false" Unicode="true" />
+          <Property Name="TenSanPham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DonHang" Relationship="GasAppModel.FK_DonHangChiTiet_DonHang" FromRole="DonHangChiTiet" ToRole="DonHang" />
+          <NavigationProperty Name="SanPham" Relationship="GasAppModel.FK_DonHangChiTiet_SanPham" FromRole="DonHangChiTiet" ToRole="SanPham" />
+        </EntityType>
+        <EntityType Name="NguoiDung">
+          <Key>
+            <PropertyRef Name="MaNguoiDung" />
+          </Key>
+          <Property Name="MaNguoiDung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenNguoiDung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoDienThoai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiNguoiDung" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Staffin" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SanPham">
+          <Key>
+            <PropertyRef Name="MaSanPham" />
+          </Key>
+          <Property Name="MaSanPham" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TenSanPham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DonGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiSanPham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MauSac" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DonHangChiTiets" Relationship="GasAppModel.FK_DonHangChiTiet_SanPham" FromRole="SanPham" ToRole="DonHangChiTiet" />
+        </EntityType>
+        <EntityType Name="TrangThaiDh">
+          <Key>
+            <PropertyRef Name="TrangThai" />
+          </Key>
+          <Property Name="TrangThaiId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrangThai" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_DonHangChiTiet_DonHang">
+          <End Type="GasAppModel.DonHang" Role="DonHang" Multiplicity="1" />
+          <End Type="GasAppModel.DonHangChiTiet" Role="DonHangChiTiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonHang">
+              <PropertyRef Name="MaDonHang" />
+            </Principal>
+            <Dependent Role="DonHangChiTiet">
+              <PropertyRef Name="MaDonHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHangChiTiet_SanPham">
+          <End Type="GasAppModel.SanPham" Role="SanPham" Multiplicity="1" />
+          <End Type="GasAppModel.DonHangChiTiet" Role="DonHangChiTiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SanPham">
+              <PropertyRef Name="MaSanPham" />
+            </Principal>
+            <Dependent Role="DonHangChiTiet">
+              <PropertyRef Name="MaSanPham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GasAppModelStoreContainer" CdmEntityContainer="GasAppEntities">
+          <EntitySetMapping Name="DonHangs">
+            <EntityTypeMapping TypeName="GasAppModel.DonHang">
+              <MappingFragment StoreEntitySet="DonHang">
+                <ScalarProperty Name="PostMan" ColumnName="PostMan" />
+                <ScalarProperty Name="SyncPostMan" ColumnName="SyncPostMan" />
+                <ScalarProperty Name="SynchronizedShop" ColumnName="SynchronizedShop" />
+                <ScalarProperty Name="SynchronizedUser" ColumnName="SynchronizedUser" />
+                <ScalarProperty Name="ShopPhone" ColumnName="ShopPhone" />
+                <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+                <ScalarProperty Name="ThoiGianGiao" ColumnName="ThoiGianGiao" />
+                <ScalarProperty Name="DiaChiGiao" ColumnName="DiaChiGiao" />
+                <ScalarProperty Name="DanhGia" ColumnName="DanhGia" />
+                <ScalarProperty Name="NgayGioTrangThai" ColumnName="NgayGioTrangThai" />
+                <ScalarProperty Name="LoaiYeuCau" ColumnName="LoaiYeuCau" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+                <ScalarProperty Name="ThoiGianDatHang" ColumnName="ThoiGianDatHang" />
+                <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+                <ScalarProperty Name="MaDonHang" ColumnName="MaDonHang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DonHangChiTiets">
+            <EntityTypeMapping TypeName="GasAppModel.DonHangChiTiet">
+              <MappingFragment StoreEntitySet="DonHangChiTiet">
+                <ScalarProperty Name="TenSanPham" ColumnName="TenSanPham" />
+                <ScalarProperty Name="Mau" ColumnName="Mau" />
+                <ScalarProperty Name="GiamTienMat" ColumnName="GiamTienMat" />
+                <ScalarProperty Name="ChietKhauPercent" ColumnName="ChietKhauPercent" />
+                <ScalarProperty Name="ThanhTien" ColumnName="ThanhTien" />
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="MaSanPham" ColumnName="MaSanPham" />
+                <ScalarProperty Name="MaDonHang" ColumnName="MaDonHang" />
+                <ScalarProperty Name="DonHangChiTiet1" ColumnName="DonHangChiTiet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NguoiDungs">
+            <EntityTypeMapping TypeName="GasAppModel.NguoiDung">
+              <MappingFragment StoreEntitySet="NguoiDung">
+                <ScalarProperty Name="Staffin" ColumnName="Staffin" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="LoaiNguoiDung" ColumnName="LoaiNguoiDung" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
+                <ScalarProperty Name="TenNguoiDung" ColumnName="TenNguoiDung" />
+                <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SanPhams">
+            <EntityTypeMapping TypeName="GasAppModel.SanPham">
+              <MappingFragment StoreEntitySet="SanPham">
+                <ScalarProperty Name="MauSac" ColumnName="MauSac" />
+                <ScalarProperty Name="LoaiSanPham" ColumnName="LoaiSanPham" />
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+                <ScalarProperty Name="TenSanPham" ColumnName="TenSanPham" />
+                <ScalarProperty Name="MaSanPham" ColumnName="MaSanPham" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrangThaiDhs">
+            <EntityTypeMapping TypeName="GasAppModel.TrangThaiDh">
+              <MappingFragment StoreEntitySet="TrangThaiDh">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="TrangThaiId" ColumnName="TrangThaiId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

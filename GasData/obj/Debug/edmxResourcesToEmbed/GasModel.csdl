@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GasAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="GasAppEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DonHangs" EntityType="GasAppModel.DonHang" />
+    <EntitySet Name="DonHangChiTiets" EntityType="GasAppModel.DonHangChiTiet" />
+    <EntitySet Name="NguoiDungs" EntityType="GasAppModel.NguoiDung" />
+    <EntitySet Name="SanPhams" EntityType="GasAppModel.SanPham" />
+    <EntitySet Name="TrangThaiDhs" EntityType="GasAppModel.TrangThaiDh" />
+    <AssociationSet Name="FK_DonHangChiTiet_DonHang" Association="GasAppModel.FK_DonHangChiTiet_DonHang">
+      <End Role="DonHang" EntitySet="DonHangs" />
+      <End Role="DonHangChiTiet" EntitySet="DonHangChiTiets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DonHangChiTiet_SanPham" Association="GasAppModel.FK_DonHangChiTiet_SanPham">
+      <End Role="SanPham" EntitySet="SanPhams" />
+      <End Role="DonHangChiTiet" EntitySet="DonHangChiTiets" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DonHang">
+    <Key>
+      <PropertyRef Name="MaDonHang" />
+    </Key>
+    <Property Name="MaDonHang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaNguoiDung" Type="Int32" />
+    <Property Name="ThoiGianDatHang" Type="DateTime" Precision="3" />
+    <Property Name="TongTien" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoaiYeuCau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NgayGioTrangThai" Type="DateTime" Precision="3" />
+    <Property Name="DanhGia" Type="Byte" />
+    <Property Name="DiaChiGiao" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ThoiGianGiao" Type="DateTime" Precision="3" />
+    <Property Name="ShopId" Type="Int32" />
+    <Property Name="ShopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ShopPhone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="SynchronizedUser" Type="Boolean" />
+    <Property Name="SynchronizedShop" Type="Boolean" />
+    <Property Name="SyncPostMan" Type="Boolean" />
+    <Property Name="PostMan" Type="Int32" />
+    <NavigationProperty Name="DonHangChiTiets" Relationship="GasAppModel.FK_DonHangChiTiet_DonHang" FromRole="DonHang" ToRole="DonHangChiTiet" />
+  </EntityType>
+  <EntityType Name="DonHangChiTiet">
+    <Key>
+      <PropertyRef Name="DonHangChiTiet1" />
+    </Key>
+    <Property Name="DonHangChiTiet1" Type="Guid" Nullable="false" />
+    <Property Name="MaDonHang" Type="Int32" Nullable="false" />
+    <Property Name="MaSanPham" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SoLuong" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DonGia" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ThanhTien" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ChietKhauPercent" Type="Byte" />
+    <Property Name="GiamTienMat" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Mau" Type="String" MaxLength="26" FixedLength="false" Unicode="true" />
+    <Property Name="TenSanPham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DonHang" Relationship="GasAppModel.FK_DonHangChiTiet_DonHang" FromRole="DonHangChiTiet" ToRole="DonHang" />
+    <NavigationProperty Name="SanPham" Relationship="GasAppModel.FK_DonHangChiTiet_SanPham" FromRole="DonHangChiTiet" ToRole="SanPham" />
+  </EntityType>
+  <EntityType Name="NguoiDung">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenNguoiDung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SoDienThoai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoaiNguoiDung" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Staffin" Type="Int32" />
+  </EntityType>
+  <EntityType Name="SanPham">
+    <Key>
+      <PropertyRef Name="MaSanPham" />
+    </Key>
+    <Property Name="MaSanPham" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="TenSanPham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DonGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoaiSanPham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MauSac" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DonHangChiTiets" Relationship="GasAppModel.FK_DonHangChiTiet_SanPham" FromRole="SanPham" ToRole="DonHangChiTiet" />
+  </EntityType>
+  <EntityType Name="TrangThaiDh">
+    <Key>
+      <PropertyRef Name="TrangThai" />
+    </Key>
+    <Property Name="TrangThaiId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TrangThai" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_DonHangChiTiet_DonHang">
+    <End Type="GasAppModel.DonHang" Role="DonHang" Multiplicity="1" />
+    <End Type="GasAppModel.DonHangChiTiet" Role="DonHangChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonHang">
+        <PropertyRef Name="MaDonHang" />
+      </Principal>
+      <Dependent Role="DonHangChiTiet">
+        <PropertyRef Name="MaDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DonHangChiTiet_SanPham">
+    <End Type="GasAppModel.SanPham" Role="SanPham" Multiplicity="1" />
+    <End Type="GasAppModel.DonHangChiTiet" Role="DonHangChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="MaSanPham" />
+      </Principal>
+      <Dependent Role="DonHangChiTiet">
+        <PropertyRef Name="MaSanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

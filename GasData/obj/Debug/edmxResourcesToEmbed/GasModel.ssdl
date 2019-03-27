@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GasAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DonHang">
+    <Key>
+      <PropertyRef Name="MaDonHang" />
+    </Key>
+    <Property Name="MaDonHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaNguoiDung" Type="int" />
+    <Property Name="ThoiGianDatHang" Type="datetime" />
+    <Property Name="TongTien" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+    <Property Name="LoaiYeuCau" Type="nvarchar" MaxLength="50" />
+    <Property Name="NgayGioTrangThai" Type="datetime" />
+    <Property Name="DanhGia" Type="tinyint" />
+    <Property Name="DiaChiGiao" Type="nvarchar" MaxLength="150" />
+    <Property Name="ThoiGianGiao" Type="datetime" />
+    <Property Name="ShopId" Type="int" />
+    <Property Name="ShopName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ShopPhone" Type="nvarchar" MaxLength="25" />
+    <Property Name="SynchronizedUser" Type="bit" />
+    <Property Name="SynchronizedShop" Type="bit" />
+    <Property Name="SyncPostMan" Type="bit" />
+    <Property Name="PostMan" Type="int" />
+  </EntityType>
+  <EntityType Name="DonHangChiTiet">
+    <Key>
+      <PropertyRef Name="DonHangChiTiet" />
+    </Key>
+    <Property Name="DonHangChiTiet" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="MaDonHang" Type="int" Nullable="false" />
+    <Property Name="MaSanPham" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="SoLuong" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DonGia" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ThanhTien" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ChietKhauPercent" Type="tinyint" />
+    <Property Name="GiamTienMat" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Mau" Type="nvarchar" MaxLength="26" />
+    <Property Name="TenSanPham" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="NguoiDung">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenNguoiDung" Type="nvarchar" MaxLength="50" />
+    <Property Name="SoDienThoai" Type="nvarchar" MaxLength="20" />
+    <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+    <Property Name="LoaiNguoiDung" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="150" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Staffin" Type="int" />
+  </EntityType>
+  <EntityType Name="SanPham">
+    <Key>
+      <PropertyRef Name="MaSanPham" />
+    </Key>
+    <Property Name="MaSanPham" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="TenSanPham" Type="nvarchar" MaxLength="50" />
+    <Property Name="DonGia" Type="nvarchar" MaxLength="50" />
+    <Property Name="LoaiSanPham" Type="nvarchar" MaxLength="50" />
+    <Property Name="MauSac" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TrangThaiDh">
+    <Key>
+      <PropertyRef Name="TrangThai" />
+    </Key>
+    <Property Name="TrangThaiId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DonHangChiTiet_DonHang">
+    <End Role="DonHang" Type="Self.DonHang" Multiplicity="1" />
+    <End Role="DonHangChiTiet" Type="Self.DonHangChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonHang">
+        <PropertyRef Name="MaDonHang" />
+      </Principal>
+      <Dependent Role="DonHangChiTiet">
+        <PropertyRef Name="MaDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DonHangChiTiet_SanPham">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
+    <End Role="DonHangChiTiet" Type="Self.DonHangChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="MaSanPham" />
+      </Principal>
+      <Dependent Role="DonHangChiTiet">
+        <PropertyRef Name="MaSanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GasAppModelStoreContainer">
+    <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DonHangChiTiet" EntityType="Self.DonHangChiTiet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NguoiDung" EntityType="Self.NguoiDung" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrangThaiDh" EntityType="Self.TrangThaiDh" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DonHangChiTiet_DonHang" Association="Self.FK_DonHangChiTiet_DonHang">
+      <End Role="DonHang" EntitySet="DonHang" />
+      <End Role="DonHangChiTiet" EntitySet="DonHangChiTiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DonHangChiTiet_SanPham" Association="Self.FK_DonHangChiTiet_SanPham">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="DonHangChiTiet" EntitySet="DonHangChiTiet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
